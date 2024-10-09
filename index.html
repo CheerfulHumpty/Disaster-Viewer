@@ -41,18 +41,18 @@
             return response.json();
         })
         .then(nasa => {
-            // Loop through the NASA data
-            for (let i = 0; i <=8000; i++) {
-                const latitude = nasa[i].latitude; // Assuming the JSON has latitude property
-                const longitude = nasa[i].longitude; // Assuming the JSON has longitude property
+            for (let i = 0; i < nasa.length; i++) {
+                const latitude = nasa[i].latitude; 
+                const longitude = nasa[i].longitude; 
 
-                // Add a marker for each location
-                let circle = L.circle([latitude, longitude],{
-                    color : "red",
-                    fillColor : "blue",
-                    fillOPacity : "0.8",
-                    radius : 2000
+                
+                let circle = L.circle([latitude, longitude], {
+                    color: "red",
+                    fillColor: "blue",
+                    fillOpacity: 0.8,  
+                    radius: 1000
                 }).addTo(map);
+                circle.bindPopup(`Country : ${nasa[i].country}<br> County Code: ${nasa[i].iso3}<br>ID: ${nasa[i].id}<br> Geolocation: ${nasa[i].gelocation} <br> Historical Event: ${nasa[i].historical} <br> Disaster Type: ${nasa[i].disastertype} <br> Disaster Year: ${nasa[i].year} <br> DIsaster Level: ${nasa[i].level}<br> Administrative Division: ${nasa[i].adm1}`);
             }
         })
         .catch(error => {
