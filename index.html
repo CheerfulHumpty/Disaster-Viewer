@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disaster Visualizer</title>
+    <title>Document</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
     <style>
         .dark {
@@ -29,30 +29,29 @@
     map.setMinZoom(2.5);
     map.setMaxZoom(20);
     
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        className: 'dark'
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        className: 'dark',
+        attribution : "@openstreetmap"
     }).addTo(map);
 
     fetch("nasa.json")
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                console.log("COuldn't fetch the data from the json file")
             }
             return response.json();
         })
         .then(nasa => {
-            for (let i = 0; i < nasa.length; i++) {
+            for (let i = 0; i < 11000; i++) {
                 const latitude = nasa[i].latitude; 
                 const longitude = nasa[i].longitude; 
-
-                
                 let circle = L.circle([latitude, longitude], {
                     color: "red",
                     fillColor: "blue",
                     fillOpacity: 0.8,  
                     radius: 1000
                 }).addTo(map);
-                circle.bindPopup(`Country : ${nasa[i].country}<br> County Code: ${nasa[i].iso3}<br>ID: ${nasa[i].id}<br> Geolocation: ${nasa[i].gelocation} <br> Historical Event: ${nasa[i].historical} <br> Disaster Type: ${nasa[i].disastertype} <br> Disaster Year: ${nasa[i].year} <br> DIsaster Level: ${nasa[i].level}<br> Administrative Division: ${nasa[i].adm1}`);
+                circle.bindPopup(`Country : ${nasa[i].country}<br> County Code: ${nasa[i].iso3}<br>ID: ${nasa[i].id}<br> Geolocation: ${nasa[i].gelocation} <br> Historical Event: ${nasa[i].historical} <br> Disaster Type: ${nasa[i].disastertype} <br> Disaster Year: ${nasa[i].year} <br> DIsaster Level: ${nasa[i].level}<br> Administrative Division: ${nasa[i].adm1} <br> Estimated Death Count: ${nasa[i].estimated_death_count}`);
             }
         })
         .catch(error => {
