@@ -42,7 +42,7 @@
             return response.json();
         })
         .then(nasa => {
-            for (let i = 0; i <=nasa.length; i++) {
+            for (let i = 0; i <=20000; i++) {
                 const latitude = nasa[i].latitude; 
                 const longitude = nasa[i].longitude; 
                 let circle = L.circle([latitude, longitude], {
